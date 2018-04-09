@@ -1,0 +1,183 @@
+#!/usr/bin/env python2
+#
+# Based on test-discovery from BlueZ itself
+#
+# python2 because python3-dbus is not yet available in Alpine Linux
+#
+# Copyright (C) 2017 Linaro Ltd.
+#
+# SPDX-License-Identifier: GPL-2.0+
+
+from __future__ import absolute_import, print_function, unicode_literals
+
+from optparse import OptionParser, make_option
+import dbus
+import dbus.mainloop.glib
+try:
+    from gi.repository import GObject
+except ImportError:
+    import gobject as GObject
+
+SERVICE_NAME = "org.bluez"
+ADAPTER_INTERFACE = SERVICE_NAME + ".Adapter1"
+DEVICE_INTERFACE = SERVICE_NAME + ".Device1"
+
+compact = False
+skip_connected = False
+devices = {}
+
+def find_adapter(objects, pattern=None):
+    bus = dbus.SystemBus()
+    for path, ifaces in objects.iteritems():
+        adapter = ifaces.get(ADAPTER_INTERFACE)
+        if adapter is None:
+            continue
+        if not pattern or pattern == adapter["Address"] or \
+                path.endswith(pattern):
+            obj = bus.get_object(SERVICE_NAME, path)
+            return dbus.Interface(obj, ADAPTER_INTERFACE)
+    raise Exception("Bluetooth adapter %s not found" % pattern)
+
+def print_compact(address, properties):
+    name = "(unknown)"
+    address = "<unknown>"
+
+    for key, value in properties.iteritems():
+        if type(value) is dbus.String:
+            value = unicode(value).encode('ascii', 'replace')
+        if (key == "Name"):
+            name = value
+        elif (key == "Address"):
+            address = value
+
+    print("%s %s" % (address, name))
+    properties["Logged"] = True
+
+def print_normal(address, properties):
+    print("[ " + address + " ]")
+
+    for key in properties.keys():
+        value = properties[key]
+        if type(value) is dbus.String:
+            value = unicode(value).encode('ascii', 'replace')
+        if (key == "Class"):
+            print("    %s = 0x%06x" % (key, value))
+        else:
+            print("    %s = %s" % (key, value))
+
+    print()
+    properties["Logged"] = True
+
+def skip_dev(old_dev, new_dev):
+    if not "Logged" in old_dev:
+        return False
+    if "Name" in old_dev:
+        return True
+    if not "Name" in new_dev:
+        return True
+    return False
+
+def interfaces_added(path, interfaces):
+    properties = interfaces.get(DEVICE_INTERFACE)
+    if not properties:
+        return
+
+    if path in devices:
+        dev = devices[path]
+        if compact and skip_dev(dev, properties):
+            return
+        devices[path] = dict(devices[path].items() + properties.items())
+    else:
+        devices[path] = properties
+
+    if "Address" in devices[path]:
+        address = properties["Address"]
+    else:
+        address = "<unknown>"
+
+    if compact:
+        print_compact(address, devices[path])
+    else:
+        print_normal(address, devices[path])
+
+def properties_changed(interface, changed, invalidated, path):
+    if interface != DEVICE_INTERFACE:
+        return
+
+    if path in devices:
+        dev = devices[path]
+        if compact and skip_dev(dev, changed):
+            return
+        devices[path] = dict(devices[path].items() + changed.items())
+    else:
+        devices[path] = changed
+
+    if "Address" in devices[path]:
+        address = devices[path]["Address"]
+    else:
+        address = "<unknown>"
+
+    if devices[path]["Connected"] and skip_connected:
+        return
+
+    if compact:
+        print_compact(address, devices[path])
+    else:
+        print_normal(address, devices[path])
+
+def timeout(mainloop):
+    mainloop.quit()
+
+if __name__ == '__main__':
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+    bus = dbus.SystemBus()
+
+    option_list = [
+            make_option("-i", "--device", action="store",
+                type="string", dest="dev_id"),
+            make_option("-c", "--compact",
+                action="store_true", dest="compact"),
+            make_option("-t", "--timeout", action="store",
+                type="int", dest="timeout"),
+            make_option("-s", "--skip_connected",
+                action="store_true", dest="skip"),
+            ]
+    parser = OptionParser(option_list=option_list)
+
+    (options, args) = parser.parse_args()
+
+    if options.compact:
+        compact = True;
+    if options.skip:
+        skip_connected = True;
+
+    bus.add_signal_receiver(interfaces_added, bus_name=SERVICE_NAME,
+            dbus_interface = "org.freedesktop.DBus.ObjectManager",
+            signal_name = "InterfacesAdded")
+
+    bus.add_signal_receiver(properties_changed, bus_name=SERVICE_NAME,
+            dbus_interface = "org.freedesktop.DBus.Properties",
+            signal_name = "PropertiesChanged",
+            arg0 = DEVICE_INTERFACE,
+            path_keyword = "path")
+
+    om = dbus.Interface(bus.get_object(SERVICE_NAME, "/"),
+            "org.freedesktop.DBus.ObjectManager")
+    objects = om.GetManagedObjects()
+    adapter = find_adapter(objects, options.dev_id)
+
+    for path, interfaces in objects.iteritems():
+        if DEVICE_INTERFACE in interfaces:
+            devices[path] = interfaces[DEVICE_INTERFACE]
+
+    try:
+        adapter.SetDiscoveryFilter({ "Transport": "le" })
+        adapter.StartDiscovery()
+    except dbus.exceptions.DBusException as e:
+        # Return non zero for any dbus exception
+        exit(1)
+
+    mainloop = GObject.MainLoop()
+    if options.timeout:
+        GObject.timeout_add(options.timeout * 1000, timeout, mainloop)
+    mainloop.run()

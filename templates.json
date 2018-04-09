@@ -1,0 +1,123 @@
+[
+  {
+    "type": "container",
+    "title": "The OSF Gateway",
+    "description": "A demonstration set of containers to create a BLE IoT gateway",
+    "platform": "linux",
+    "restart_policy": "no",
+    "image": "opensourcefoundries/compose-launcher:latest",
+    "categories": [
+      "IoT",
+      "Gateway",
+      "Demonstration"
+    ],
+    "env": [
+      {
+        "name": "TARGET",
+        "description": "Docker compose file to run",
+        "set": "simple-gateway.yml"
+      },
+      {
+        "name": "ACCOUNT",
+        "description": "Docker hub account",
+        "set": "opensourcefoundries"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ]
+  },
+  {
+    "type": "container",
+    "title": "The OSF All-in-one Demo",
+    "description": "A Wifi AP and IoT device management suite all on your device",
+    "categories": [
+      "IoT",
+      "Gateway",
+      "Demonstration"
+    ],
+    "env": [
+      {
+        "name": "TARGET",
+        "description": "The set of containers to launch",
+        "set": "all-in-one.yml"
+      },
+      {
+        "name": "ACCOUNT",
+        "description": "The account on docker hub",
+        "set": "opensourcefoundries"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ],
+    "platform": "linux",
+    "restart_policy": "no",
+    "image": "opensourcefoundries/compose-launcher:latest"
+  },
+  {
+    "type": "container",
+    "title": "Dump1090",
+    "description": "Dump1090 server",
+    "categories": [
+      "Demonstration"
+    ],
+    "platform": "linux",
+    "privileged": true,
+    "image": "opensourcefoundries/dump1090:latest",
+    "ports": [
+      "8080/tcp"
+    ],
+    "restart_policy": "unless-stopped",
+    "volumes": [
+      {
+        "container": "/dev/bus/usb",
+        "bind": "/dev/bus/usb"
+      }
+    ]
+  },
+  {
+    "type": "container",
+    "title": "leshan",
+    "description": "Eclipse Foundation's Leshan Server for LWM2M",
+    "categories": [
+      "Device Management"
+    ],
+    "network": "bridge",
+    "ports": [
+      "8081/tcp",
+      "5683/udp",
+      "5684/udp"
+    ],
+    "platform": "linux",
+    "image": "opensourcefoundries/leshan:latest",
+    "restart_policy": "unless-stopped",
+    "env": [
+      {
+        "name": "LESHAN_ARGS",
+        "set": "-wp 8081"
+      }
+    ]
+  },
+  {
+    "type": "container",
+    "title": "hawkbit",
+    "description": "Eclipse Foundation's Hawkbit OTA Server",
+    "categories": [
+      "Device Management"
+    ],
+    "network": "bridge",
+    "ports": [
+      "8080/tcp"
+    ],
+    "platform": "linux",
+    "image": "opensourcefoundries/hawkbit-update-server:latest",
+    "restart_policy": "unless-stopped"
+  }
+]

@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+
+  leshan:
+    image: ${ACCOUNT:-opensourcefoundries}/leshan:latest
+    read_only: true
+    environment:
+     - LESHAN_ARGS="-wp 8081"
+    ports:
+      - "8081:8081"
+    network_mode: "host"
+    restart: always
+
+  hawkbit:
+    image: ${ACCOUNT:-opensourcefoundries}/hawkbit-update-server:latest
+    read_only: true
+    ports:
+      - "8080:8080"
+    network_mode: "host"
+    restart: always
+
+  mosquitto:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
+    read_only: true
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    network_mode: "host"
+    restart: always
+
+  bt-joiner:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-bt-joiner:latest
+    tmpfs:
+      - /run
+      - /var/lock
+      - /var/log
+      - /var/run
+    network_mode: "host"
+    restart: always
+    read_only: true
+    privileged: true
+
+  simple-californium-proxy:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
+    read_only: true
+    network_mode: "host"
+    networks:
+      - big-network
+    restart: always
+
+networks:
+  big-network:

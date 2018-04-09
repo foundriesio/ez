@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  mosquitto:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
+    read_only: true
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      - big-network
+    restart: always
+
+  nginx-http-proxy:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-http-proxy:latest
+    tmpfs:
+      - /run
+      - /var/run
+      - /var/cache/nginx
+    read_only: true
+    ports:
+      - "8080:8080"
+    networks:
+      - big-network
+    restart: always
+
+  bt-joiner:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-bt-joiner:latest
+    tmpfs:
+      - /run
+      - /var/lock
+      - /var/log
+      - /var/run
+    network_mode: "host"
+    restart: always
+    read_only: true
+    privileged: true
+
+  simple-coap-proxy:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-coap-proxy:latest
+    tmpfs:
+      - /run
+      - /var/run
+      - /var/cache/nginx
+    read_only: true
+    ports:
+      - "8080:8080"
+    ports:
+      - "5683:5683/udp"
+      - "5684:5684/udp"
+      - "5685:5685/udp"
+      - "5686:5686/udp"
+    networks:
+      - big-network
+    restart: always
+
+  simple-californium-proxy:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
+    read_only: true
+    ports:
+      - "5682:5682"
+    networks:
+      - big-network
+    restart: always
+
+networks:
+  big-network:
