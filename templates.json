@@ -5,7 +5,7 @@
     "description": "A demonstration set of containers to create a BLE IoT gateway",
     "platform": "linux",
     "restart_policy": "no",
-    "image": "opensourcefoundries/compose-launcher:latest",
+    "image": "OpenSourceFoundries/compose-launcher:latest",
     "categories": [
       "IoT",
       "Gateway",
@@ -48,7 +48,7 @@
       {
         "name": "ACCOUNT",
         "description": "The account on docker hub",
-        "set": "opensourcefoundries"
+        "set": "akbennett"
       }
     ],
     "volumes": [
@@ -59,7 +59,7 @@
     ],
     "platform": "linux",
     "restart_policy": "no",
-    "image": "opensourcefoundries/compose-launcher:latest"
+    "image": "OpenSourceFoundries/compose-launcher:latest"
   },
   {
     "type": "container",
@@ -70,7 +70,7 @@
     ],
     "platform": "linux",
     "privileged": true,
-    "image": "opensourcefoundries/dump1090:latest",
+    "image": "OpenSourceFoundries/dump1090:latest",
     "ports": [
       "8080/tcp"
     ],
@@ -96,7 +96,7 @@
       "5684/udp"
     ],
     "platform": "linux",
-    "image": "opensourcefoundries/leshan:latest",
+    "image": "OpenSourceFoundries/leshan:latest",
     "restart_policy": "unless-stopped",
     "env": [
       {
@@ -117,7 +117,20 @@
       "8080/tcp"
     ],
     "platform": "linux",
-    "image": "opensourcefoundries/hawkbit-update-server:latest",
+    "image": "OpenSourceFoundries/hawkbit-update-server:latest",
+    "restart_policy": "unless-stopped"
+  },
+  {
+    "type": "container",
+    "title": "Xorg Demo",
+    "description": "Xorg server (Simply FB TFT display and ADS7846 touchscreen)",
+    "categories": [
+      "Demonstration",
+      "Graphics"
+    ],
+    "platform": "linux",
+    "privileged": "true",
+    "image": "opensourcefoundries/simple-fbtft:latest",
     "restart_policy": "unless-stopped"
   }
 ]
