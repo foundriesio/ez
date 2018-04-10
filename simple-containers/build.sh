@@ -5,6 +5,7 @@ arch="bogus"
 [ `arch` == i386 ] && arch="-amd64"
 [ `arch` == aarch64 ] && arch="-arm64"
 [ `arch` == armhf ] && arch="-arm"
+[ `arch` == armv7l ] && arch="-arm"
 [ `arch` == x86_64 ] && arch="-amd64"
 
 # create_and_push_manifest
