@@ -5,7 +5,7 @@
     "description": "A demonstration set of containers to create a BLE IoT gateway",
     "platform": "linux",
     "restart_policy": "no",
-    "image": "OpenSourceFoundries/compose-launcher:latest",
+    "image": "opensourcefoundries/compose-launcher:latest",
     "categories": [
       "IoT",
       "Gateway",
@@ -59,7 +59,7 @@
     ],
     "platform": "linux",
     "restart_policy": "no",
-    "image": "OpenSourceFoundries/compose-launcher:latest"
+    "image": "opensourcefoundries/compose-launcher:latest"
   },
   {
     "type": "container",
@@ -70,7 +70,7 @@
     ],
     "platform": "linux",
     "privileged": true,
-    "image": "OpenSourceFoundries/dump1090:latest",
+    "image": "opensourcefoundries/dump1090:latest",
     "ports": [
       "8080/tcp"
     ],
@@ -96,7 +96,7 @@
       "5684/udp"
     ],
     "platform": "linux",
-    "image": "OpenSourceFoundries/leshan:latest",
+    "image": "opensourcefoundries/leshan:latest",
     "restart_policy": "unless-stopped",
     "env": [
       {
@@ -117,8 +117,33 @@
       "8080/tcp"
     ],
     "platform": "linux",
-    "image": "OpenSourceFoundries/hawkbit-update-server:latest",
+    "image": "opensourcefoundries/hawkbit-update-server:latest",
     "restart_policy": "unless-stopped"
+  },
+  {
+    "type": "container",
+    "title": "IoT Edge",
+    "description": "Microsoft IoT Edge deployment, after deploy, re-create with your own connection string in the variable",
+    "categories": [
+      "Device Management",
+      "Microsoft"
+    ],
+    "network": "bridge",
+    "platform": "linux",
+    "image": "opensourcefoundries/simple-iot-edge:latest",
+    "restart_policy": "unless-stopped",
+    "env": [
+      {
+        "name": "CONNECTIONSTRING",
+        "set": "GET KEY FROM IOT_EDGE"
+      }
+    ],
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ]
   },
   {
     "type": "container",
