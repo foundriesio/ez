@@ -157,5 +157,25 @@
     "privileged": "true",
     "image": "opensourcefoundries/simple-fbtft:latest",
     "restart_policy": "unless-stopped"
+  },
+  {
+    "type": "container",
+    "title": "EdgeX pre-release",
+    "description": "EdgeX - x86 only - ALPHA quality, Work in progress upstream",
+    "categories": [
+      "IoT",
+      "Gateway",
+      "Demonstration"
+    ],
+    "command": "/bin/bash -c /edgex-docker-launch.sh",
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ],
+    "platform": "linux",
+    "restart_policy": "no",
+    "image": "opensourcefoundries/compose-launcher:latest"
   }
 ]
