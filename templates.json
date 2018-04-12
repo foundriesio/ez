@@ -154,7 +154,7 @@
       "Graphics"
     ],
     "platform": "linux",
-    "privileged": "true",
+    "privileged": true,
     "image": "opensourcefoundries/simple-fbtft:latest",
     "restart_policy": "unless-stopped"
   },
