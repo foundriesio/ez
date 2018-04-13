@@ -156,6 +156,12 @@
     "platform": "linux",
     "privileged": true,
     "image": "opensourcefoundries/simple-fbtft:latest",
+    "volumes": [
+      {
+        "container": "/var/run/dbus/system_bus_socket",
+        "bind": "/var/run/dbus/system_bus_socket"
+      }
+    ],
     "restart_policy": "unless-stopped"
   },
   {
