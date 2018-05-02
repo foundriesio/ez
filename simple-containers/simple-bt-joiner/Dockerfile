@@ -21,4 +21,4 @@ RUN chmod +x start.sh
 ENTRYPOINT ["/start.sh"]
 
 # Default to start bluetooth_6lowpand and dump output at stdout
-CMD /usr/bin/bluetooth_6lowpand --auto-detect --daemonize --skip_init
+CMD /usr/bin/bluetooth_6lowpand --daemonize --skip_init

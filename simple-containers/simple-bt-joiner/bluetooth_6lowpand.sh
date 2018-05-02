@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-SCRIPT_VERSION="1.07"
+SCRIPT_VERSION="1.06"
 
 # logging
 LOG_LEVEL_ERROR=1
@@ -135,9 +135,8 @@ function conf_remove_entry {
 function print_help {
 cat << END_OF_HELP_MARKER
 GENERAL COMMAND LINE OPTIONS:
--ll    | --loglevel			: default log level output (values: 1 to 5)
+-ll    | --loglevel		: default log level output (values: 1 to 5)
 -d     | --daemonize		: daemonize
--a     | --auto-detect		: attempt to auto-detect the hci device
 -wl    | --use_whitelist	: use whitelist (not persistent for use with -d)
 -igf   | --ignore_filter	: connect all beacons (for use with -d)
 -hciif | --hci_interface	: specify an alternate to hci0 interface (for use with -d)
@@ -290,10 +289,6 @@ while [ "${#}" -gt 0 ]; do
 			exit 1
 		fi
 		option_loglevel="${1}"
-		shift
-		;;
-	"-a" | "--auto-detect")
-		option_hci_interface=`hciconfig | egrep 'UART' | cut -d: -f1`
 		shift
 		;;
 	"-d" | "--daemonize")
