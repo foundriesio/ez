@@ -123,7 +123,7 @@
   {
     "type": "container",
     "title": "IoT Edge",
-    "description": "Microsoft IoT Edge deployment, after deploy, re-create with your own connection string in the variable",
+    "description": "Microsoft IoT Edge demo deployment",
     "categories": [
       "Device Management",
       "Microsoft"
@@ -135,13 +135,66 @@
     "env": [
       {
         "name": "CONNECTIONSTRING",
-        "set": "GET KEY FROM IOT_EDGE"
+        "label": "The connection string from Azure IoT Edge Dashboard",
+        "set": ""
       }
     ],
     "volumes": [
       {
         "container": "/var/run/docker.sock",
         "bind": "/var/run/docker.sock"
+      }
+    ]
+  },
+  {
+    "type": "container",
+    "title": "OK Google - Voice Assistant",
+    "description": "The OK Google Voice assistant (requires configuration)",
+    "categories": [
+      "Demonstration",
+      "Audio",
+      "Google"
+    ],
+    "platform": "linux",
+    "image": "opensourcefoundries/ok-google:latest",
+    "privileged": true,
+    "restart_policy": "unless-stopped",
+    "interactive": true,
+    "env": [
+      {
+          "name": "MIC_ADDR",
+          "label": "The pcm address for the microphone",
+          "set": ""
+      },
+      {
+          "name": "SPEAKER_ADDR",
+          "label": "The pcm address for the speaker",
+          "set": ""
+      },
+      {
+          "name": "PROJECT_ID",
+          "label": "ID of project when created in Google Cloud Platform",
+          "set": ""
+      },
+      {
+          "name": "MODEL_ID",
+          "label": "Model ID for device when created in Google Cloud Platform",
+          "set": ""
+      },
+      {
+          "name": "CLIENT_SECRET",
+          "label": "Client secret from Google Cloud Platform",
+          "set": ""
+      },
+      {
+          "name": "CLIENT_ID",
+          "label": "Client ID from Google Cloud Platform",
+          "set": ""
+      },
+      {
+          "name": "REFRESH_TOKEN",
+          "label": "Refresh token when device was authenticated",
+          "set": ""
       }
     ]
   },

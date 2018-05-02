@@ -55,3 +55,22 @@ do
 
     popd
 done
+
+#ok-google doesn't build on aarch64, so exit.  we can run arm32 container though
+[ `arch` == aarch64 ] && exit
+pushd ok-google
+    D=ok-google
+    docker build -t ${ACCOUNT:-opensourcefoundries}/$D:latest$arch --force-rm .
+    docker push ${ACCOUNT:-opensourcefoundries}/$D:latest$arch
+    create_and_push_manifest ${ACCOUNT:-opensourcefoundries} $D
+    if [ $arch == "-arm" ]; then
+        docker tag ${ACCOUNT:-opensourcefoundries}/$D:latest-arm ${ACCOUNT:-opensourcefoundries}/$D:latest-arm64
+        docker push ${ACCOUNT:-opensourcefoundries}/$D:latest-arm64
+        echo "### until google updates the library, you will need to manually"
+        echo "### need to manually create and push the manifest to force an "
+        echo "### arm64 target to boot an arm image"
+        echo "  ~/.docker/manifests/..."
+        #create_and_push_manifest ${ACCOUNT:-opensourcefoundries} $D
+    fi
+
+popd
