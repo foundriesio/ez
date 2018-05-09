@@ -1,16 +1,16 @@
 [
   {
-    "type": "container",
     "title": "The OSF Gateway",
     "description": "A demonstration set of containers to create a BLE IoT gateway",
+    "type": "container",
     "platform": "linux",
-    "restart_policy": "no",
-    "image": "opensourcefoundries/compose-launcher:latest",
     "categories": [
       "IoT",
       "Gateway",
       "Demonstration"
     ],
+    "image": "opensourcefoundries/compose-launcher:latest",
+    "restart_policy": "no",
     "env": [
       {
         "name": "TARGET",
@@ -31,14 +31,17 @@
     ]
   },
   {
-    "type": "container",
     "title": "The OSF All-in-one Demo",
     "description": "A Wifi AP and IoT device management suite all on your device",
+    "type": "container",
+    "platform": "linux",
     "categories": [
       "IoT",
       "Gateway",
       "Demonstration"
     ],
+    "image": "opensourcefoundries/compose-launcher:latest",
+    "restart_policy": "no",
     "env": [
       {
         "name": "TARGET",
@@ -56,25 +59,42 @@
         "container": "/var/run/docker.sock",
         "bind": "/var/run/docker.sock"
       }
-    ],
-    "platform": "linux",
-    "restart_policy": "no",
-    "image": "opensourcefoundries/compose-launcher:latest"
+    ]
   },
   {
+    "title": "watchtower",
+    "description": "an application that checks for updated versions of your running containers and automatically pulls them down and restarts your containers",
     "type": "container",
-    "title": "Dump1090",
-    "description": "Dump1090 server",
-    "categories": [
-      "Demonstration"
-    ],
     "platform": "linux",
-    "privileged": true,
-    "image": "opensourcefoundries/dump1090:latest",
+    "categories": [
+      "Container", "Management"
+    ],
+    "image": "opensourcefoundries/watchtower:latest",
+    "restart_policy": "unless-stopped",
     "ports": [
       "8080/tcp"
     ],
+    "volumes": [
+      {
+        "container": "/var/run/docker.sock",
+        "bind": "/var/run/docker.sock"
+      }
+    ]
+  },
+  {
+    "title": "Dump1090",
+    "description": "Dump1090 server",
+    "type": "container",
+    "platform": "linux",
+    "categories": [
+      "Demonstration"
+    ],
+    "image": "opensourcefoundries/dump1090:latest",
     "restart_policy": "unless-stopped",
+    "privileged": true,
+    "ports": [
+      "8080/tcp"
+    ],
     "volumes": [
       {
         "container": "/dev/bus/usb",
@@ -83,21 +103,21 @@
     ]
   },
   {
-    "type": "container",
     "title": "leshan",
     "description": "Eclipse Foundation's Leshan Server for LWM2M",
+    "type": "container",
+    "platform": "linux",
     "categories": [
       "Device Management"
     ],
+    "image": "opensourcefoundries/leshan:latest",
+    "restart_policy": "unless-stopped",
     "network": "bridge",
     "ports": [
       "8081/tcp",
       "5683/udp",
       "5684/udp"
     ],
-    "platform": "linux",
-    "image": "opensourcefoundries/leshan:latest",
-    "restart_policy": "unless-stopped",
     "env": [
       {
         "name": "LESHAN_ARGS",
@@ -106,32 +126,32 @@
     ]
   },
   {
-    "type": "container",
     "title": "hawkbit",
     "description": "Eclipse Foundation's Hawkbit OTA Server",
+    "type": "container",
+    "platform": "linux",
     "categories": [
       "Device Management"
     ],
+    "image": "opensourcefoundries/hawkbit-update-server:latest",
+    "restart_policy": "unless-stopped",
     "network": "bridge",
     "ports": [
       "8080/tcp"
-    ],
-    "platform": "linux",
-    "image": "opensourcefoundries/hawkbit-update-server:latest",
-    "restart_policy": "unless-stopped"
+    ]
   },
   {
+    "title": "Azure IoT Edge node",
+    "description": "a simple Microsoft Azure IoT Edge demo deployment",
     "type": "container",
-    "title": "IoT Edge",
-    "description": "Microsoft IoT Edge demo deployment",
+    "platform": "linux",
     "categories": [
       "Device Management",
       "Microsoft"
     ],
-    "network": "bridge",
-    "platform": "linux",
     "image": "opensourcefoundries/simple-iot-edge:latest",
     "restart_policy": "unless-stopped",
+    "network": "bridge",
     "env": [
       {
         "name": "CONNECTIONSTRING",
@@ -147,18 +167,18 @@
     ]
   },
   {
-    "type": "container",
     "title": "OK Google - Voice Assistant",
     "description": "The OK Google Voice assistant (requires configuration)",
+    "type": "container",
+    "platform": "linux",
     "categories": [
       "Demonstration",
       "Audio",
       "Google"
     ],
-    "platform": "linux",
     "image": "opensourcefoundries/ok-google:latest",
-    "privileged": true,
     "restart_policy": "unless-stopped",
+    "privileged": true,
     "interactive": true,
     "env": [
       {
@@ -199,42 +219,42 @@
     ]
   },
   {
-    "type": "container",
     "title": "Xorg Demo",
     "description": "Xorg server (Simply FB TFT display and ADS7846 touchscreen)",
+    "type": "container",
+    "platform": "linux",
     "categories": [
       "Demonstration",
       "Graphics"
     ],
-    "platform": "linux",
-    "privileged": true,
     "image": "opensourcefoundries/simple-fbtft:latest",
+    "restart_policy": "unless-stopped",
+    "privileged": true,
     "volumes": [
       {
         "container": "/var/run/dbus/system_bus_socket",
         "bind": "/var/run/dbus/system_bus_socket"
       }
-    ],
-    "restart_policy": "unless-stopped"
+    ]
   },
   {
-    "type": "container",
     "title": "EdgeX pre-release",
     "description": "EdgeX - x86 only - ALPHA quality, Work in progress upstream",
+    "type": "container",
+    "platform": "linux",
     "categories": [
       "IoT",
       "Gateway",
       "Demonstration"
     ],
+    "image": "opensourcefoundries/compose-launcher:latest",
+    "restart_policy": "no",
     "command": "/bin/bash -c /edgex-docker-launch.sh",
     "volumes": [
       {
         "container": "/var/run/docker.sock",
         "bind": "/var/run/docker.sock"
       }
-    ],
-    "platform": "linux",
-    "restart_policy": "no",
-    "image": "opensourcefoundries/compose-launcher:latest"
+    ]
   }
 ]
