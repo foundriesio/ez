@@ -63,12 +63,5 @@ services:
       - big-network
     restart: always
 
-  watchtower:
-    image: ${ACCOUNT:-opensourcefoundries}/watchtower:latest
-    read_only: true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: always
-
 networks:
   big-network:
