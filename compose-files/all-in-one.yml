@@ -51,4 +51,6 @@ services:
     image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
     read_only: true
     network_mode: "host"
+    ports:
+      - "5682:5682"
     restart: always
