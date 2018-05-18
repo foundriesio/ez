@@ -32,7 +32,7 @@
   },
   {
     "title": "The OSF All-in-one Demo",
-    "description": "A Wifi AP and IoT device management suite all on your device",
+    "description": "IoT device management suite all on your device",
     "type": "container",
     "platform": "linux",
     "categories": [
