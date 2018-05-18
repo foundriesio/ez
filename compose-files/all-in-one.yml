@@ -6,11 +6,13 @@ services:
     image: ${ACCOUNT:-opensourcefoundries}/leshan:latest
     read_only: true
     environment:
-     - LESHAN_ARGS="-wp 8081"
+     - LESHAN_ARGS=-wp 8081
     ports:
       - "8081:8081"
     network_mode: "host"
     restart: always
+    tmpfs:
+      - /tmp
 
   hawkbit:
     image: ${ACCOUNT:-opensourcefoundries}/hawkbit-update-server:latest
@@ -19,6 +21,9 @@ services:
       - "8080:8080"
     network_mode: "host"
     restart: always
+    tmpfs:
+      - /var/run
+      - /var/cache/nginx
 
   mosquitto:
     image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
@@ -45,9 +50,4 @@ services:
     image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
     read_only: true
     network_mode: "host"
-    networks:
-      - big-network
     restart: always
-
-networks:
-  big-network:
