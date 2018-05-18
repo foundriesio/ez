@@ -24,6 +24,7 @@ services:
     tmpfs:
       - /var/run
       - /var/cache/nginx
+      - /tmp
 
   mosquitto:
     image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
