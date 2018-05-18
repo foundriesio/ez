@@ -46,9 +46,3 @@ services:
     restart: always
     read_only: true
     privileged: true
-
-  simple-californium-proxy:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
-    read_only: true
-    network_mode: "host"
-    restart: always
