@@ -51,7 +51,7 @@
       {
         "name": "ACCOUNT",
         "description": "The account on docker hub",
-        "set": "akbennett"
+        "set": "opensourcefoundries"
       }
     ],
     "volumes": [
