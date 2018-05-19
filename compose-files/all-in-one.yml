@@ -1,7 +1,6 @@
 version: '3'
 
 services:
-
   leshan:
     image: ${ACCOUNT:-opensourcefoundries}/leshan:latest
     read_only: true
@@ -9,22 +8,29 @@ services:
      - LESHAN_ARGS=-wp 8081
     ports:
       - "8081:8081"
-    network_mode: "host"
+      - "5683:5683/udp"
+      - "5684:5684/udp"
+      - "5685:5685/udp"
+      - "5686:5686/udp"
+
     restart: always
     tmpfs:
       - /tmp
+  networks:
+    - big-network
 
   hawkbit:
     image: ${ACCOUNT:-opensourcefoundries}/hawkbit-update-server:latest
     read_only: true
     ports:
       - "8080:8080"
-    network_mode: "host"
     restart: always
     tmpfs:
       - /var/run
       - /var/cache/nginx
       - /tmp
+    networks:
+      - big-network
 
   mosquitto:
     image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
@@ -32,8 +38,9 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
-    network_mode: "host"
     restart: always
+    networks:
+      - big-network
 
   bt-joiner:
     image: ${ACCOUNT:-opensourcefoundries}/simple-bt-joiner:latest
@@ -46,3 +53,6 @@ services:
     restart: always
     read_only: true
     privileged: true
+
+networks:
+  big-network:
