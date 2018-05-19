@@ -12,7 +12,6 @@ services:
       - "5684:5684/udp"
       - "5685:5685/udp"
       - "5686:5686/udp"
-
     restart: always
     tmpfs:
       - /tmp
@@ -53,6 +52,15 @@ services:
     restart: always
     read_only: true
     privileged: true
+
+  simple-californium-proxy:
+    image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
+    read_only: true
+    ports:
+      - "5682:5682"
+    networks:
+      - big-network
+    restart: always
 
 networks:
   big-network:
