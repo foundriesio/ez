@@ -9,7 +9,7 @@
       "Gateway",
       "Demonstration"
     ],
-    "image": "opensourcefoundries/compose-launcher:latest",
+    "image": "foundriesio/compose-launcher:latest",
     "restart_policy": "no",
     "env": [
       {
@@ -20,7 +20,7 @@
       {
         "name": "ACCOUNT",
         "description": "Docker hub account",
-        "set": "opensourcefoundries"
+        "set": "foundriesio"
       }
     ],
     "volumes": [
@@ -40,7 +40,7 @@
       "Gateway",
       "Demonstration"
     ],
-    "image": "opensourcefoundries/compose-launcher:latest",
+    "image": "foundriesio/compose-launcher:latest",
     "restart_policy": "no",
     "env": [
       {
@@ -51,7 +51,7 @@
       {
         "name": "ACCOUNT",
         "description": "The account on docker hub",
-        "set": "opensourcefoundries"
+        "set": "foundriesio"
       }
     ],
     "volumes": [
@@ -69,7 +69,7 @@
     "categories": [
       "Container", "Management"
     ],
-    "image": "opensourcefoundries/watchtower:latest",
+    "image": "foundriesio/watchtower:latest",
     "restart_policy": "unless-stopped",
     "ports": [
       "8080/tcp"
@@ -89,7 +89,7 @@
     "categories": [
       "Demonstration"
     ],
-    "image": "opensourcefoundries/dump1090:latest",
+    "image": "foundriesio/dump1090:latest",
     "restart_policy": "unless-stopped",
     "privileged": true,
     "ports": [
@@ -110,7 +110,7 @@
     "categories": [
       "Device Management"
     ],
-    "image": "opensourcefoundries/leshan:latest",
+    "image": "foundriesio/leshan:latest",
     "restart_policy": "unless-stopped",
     "network": "bridge",
     "ports": [
@@ -133,7 +133,7 @@
     "categories": [
       "Device Management"
     ],
-    "image": "opensourcefoundries/hawkbit-update-server:latest",
+    "image": "foundriesio/hawkbit-update-server:latest",
     "restart_policy": "unless-stopped",
     "network": "bridge",
     "ports": [
@@ -149,7 +149,7 @@
       "Device Management",
       "Microsoft"
     ],
-    "image": "opensourcefoundries/simple-iot-edge:latest",
+    "image": "foundriesio/simple-iot-edge:latest",
     "restart_policy": "unless-stopped",
     "network": "bridge",
     "env": [
@@ -176,7 +176,7 @@
       "Audio",
       "Google"
     ],
-    "image": "opensourcefoundries/ok-google:latest",
+    "image": "foundriesio/ok-google:latest",
     "restart_policy": "unless-stopped",
     "privileged": true,
     "interactive": true,
@@ -227,7 +227,7 @@
       "Demonstration",
       "Graphics"
     ],
-    "image": "opensourcefoundries/simple-fbtft:latest",
+    "image": "foundriesio/simple-fbtft:latest",
     "restart_policy": "unless-stopped",
     "privileged": true,
     "volumes": [
@@ -247,7 +247,7 @@
       "Gateway",
       "Demonstration"
     ],
-    "image": "opensourcefoundries/compose-launcher:latest",
+    "image": "foundriesio/compose-launcher:latest",
     "restart_policy": "no",
     "command": "/bin/bash -c /edgex-docker-launch.sh",
     "volumes": [

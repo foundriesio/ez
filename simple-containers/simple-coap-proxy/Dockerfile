@@ -2,8 +2,6 @@ FROM alpine:3.7
 
 # Based on https://github.com/nginxinc/docker-nginx/tree/master/mainline/alpine
 # Includes one additional patch for experimental DTLS support
-MAINTAINER Ricardo Salveti "ricardo@opensourcefoundries.com"
-
 ENV NGINX_VERSION 1.13.11
 
 # From http://nginx.org/patches/dtls/

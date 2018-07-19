@@ -1,4 +1,4 @@
-FROM opensourcefoundries/minideb:stretch
+FROM foundriesio/minideb:stretch
 
 RUN install_packages \
   xserver-xorg \

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   leshan:
-    image: ${ACCOUNT:-opensourcefoundries}/leshan:latest
+    image: ${ACCOUNT:-foundriesio}/leshan:latest
     read_only: true
     environment:
      - LESHAN_ARGS=-wp 8081
@@ -19,7 +19,7 @@ services:
     - big-network
 
   hawkbit:
-    image: ${ACCOUNT:-opensourcefoundries}/hawkbit-update-server:latest
+    image: ${ACCOUNT:-foundriesio}/hawkbit-update-server:latest
     read_only: true
     ports:
       - "8080:8080"
@@ -32,7 +32,7 @@ services:
       - big-network
 
   mosquitto:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
+    image: ${ACCOUNT:-foundriesio}/simple-mosquitto-broker:latest
     read_only: true
     ports:
       - "1883:1883"
@@ -42,7 +42,7 @@ services:
       - big-network
 
   bt-joiner:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-bt-joiner:latest
+    image: ${ACCOUNT:-foundriesio}/simple-bt-joiner:latest
     tmpfs:
       - /run
       - /var/lock
@@ -54,7 +54,7 @@ services:
     privileged: true
 
   simple-californium-proxy:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
+    image: ${ACCOUNT:-foundriesio}/simple-californium-proxy:latest
     read_only: true
     ports:
       - "5682:5682"

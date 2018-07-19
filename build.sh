@@ -15,36 +15,36 @@ function create_and_push_manifest {
     D=$2
     # create a manifest for atleast 1 image
     docker manifest create --amend \
-        ${ACCOUNT:-opensourcefoundries}/$D:latest \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest$arch
+        ${ACCOUNT:-foundriesio}/$D:latest \
+            ${ACCOUNT:-foundriesio}/$D:latest$arch
 
     # create a manifest for atlearst 2 images
     docker manifest create --amend \
-        ${ACCOUNT:-opensourcefoundries}/$D:latest \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-arm64 \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-amd64
+        ${ACCOUNT:-foundriesio}/$D:latest \
+            ${ACCOUNT:-foundriesio}/$D:latest-arm64 \
+            ${ACCOUNT:-foundriesio}/$D:latest-amd64
     docker manifest create --amend \
-        ${ACCOUNT:-opensourcefoundries}/$D:latest \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-arm64 \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-arm
+        ${ACCOUNT:-foundriesio}/$D:latest \
+            ${ACCOUNT:-foundriesio}/$D:latest-arm64 \
+            ${ACCOUNT:-foundriesio}/$D:latest-arm
     docker manifest create --amend \
-        ${ACCOUNT:-opensourcefoundries}/$D:latest \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-arm \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-amd64
+        ${ACCOUNT:-foundriesio}/$D:latest \
+            ${ACCOUNT:-foundriesio}/$D:latest-arm \
+            ${ACCOUNT:-foundriesio}/$D:latest-amd64
 
     # create a manifest for atleast 2 images
     docker manifest create --amend \
-        ${ACCOUNT:-opensourcefoundries}/$D:latest \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-arm64 \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-amd64 \
-            ${ACCOUNT:-opensourcefoundries}/$D:latest-arm
+        ${ACCOUNT:-foundriesio}/$D:latest \
+            ${ACCOUNT:-foundriesio}/$D:latest-arm64 \
+            ${ACCOUNT:-foundriesio}/$D:latest-amd64 \
+            ${ACCOUNT:-foundriesio}/$D:latest-arm
 
     # push the manifest that won the battle
-    docker manifest push --purge ${ACCOUNT:-opensourcefoundries}/$D:latest
+    docker manifest push --purge ${ACCOUNT:-foundriesio}/$D:latest
 
 }
 
 # build docker compose with the local yml files
-docker build -f compose-launcher/Dockerfile -t ${ACCOUNT:-opensourcefoundries}/compose-launcher:latest$arch .
-docker push ${ACCOUNT:-opensourcefoundries}/compose-launcher:latest$arch
-create_and_push_manifest ${ACCOUNT:-opensourcefoundries} "compose-launcher"
+docker build -f compose-launcher/Dockerfile -t ${ACCOUNT:-foundriesio}/compose-launcher:latest$arch .
+docker push ${ACCOUNT:-foundriesio}/compose-launcher:latest$arch
+create_and_push_manifest ${ACCOUNT:-foundriesio} "compose-launcher"

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mosquitto:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-mosquitto-broker:latest
+    image: ${ACCOUNT:-foundriesio}/simple-mosquitto-broker:latest
     read_only: true
     ports:
       - "1883:1883"
@@ -12,7 +12,7 @@ services:
     restart: always
 
   nginx-http-proxy:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-http-proxy:latest
+    image: ${ACCOUNT:-foundriesio}/simple-http-proxy:latest
     tmpfs:
       - /run
       - /var/run
@@ -25,7 +25,7 @@ services:
     restart: always
 
   bt-joiner:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-bt-joiner:latest
+    image: ${ACCOUNT:-foundriesio}/simple-bt-joiner:latest
     tmpfs:
       - /run
       - /var/lock
@@ -37,7 +37,7 @@ services:
     privileged: true
 
   simple-coap-proxy:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-coap-proxy:latest
+    image: ${ACCOUNT:-foundriesio}/simple-coap-proxy:latest
     tmpfs:
       - /run
       - /var/run
@@ -55,7 +55,7 @@ services:
     restart: always
 
   simple-californium-proxy:
-    image: ${ACCOUNT:-opensourcefoundries}/simple-californium-proxy:latest
+    image: ${ACCOUNT:-foundriesio}/simple-californium-proxy:latest
     read_only: true
     ports:
       - "5682:5682"

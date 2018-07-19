@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-MAINTAINER Ricardo Salveti "ricardo@opensourcefoundries.com"
-
 RUN apk add --no-cache bluez-deprecated bluez bluez-btmon bluez-meshctl py-dbus py-gobject3
 
 # BT 6lowpan joiner

@@ -1,4 +1,4 @@
-FROM opensourcefoundries/minideb:stretch
+FROM foundriesio/minideb:stretch
 
 RUN install_packages file build-essential python-pip python-dev libffi-dev libssl-dev
 

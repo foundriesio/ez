@@ -1,9 +1,5 @@
 FROM alpine:latest
 
-MAINTAINER Michael Scott "michael@opensourcefoundries.com"
-# Californium proxy code located at:
-# https://github.com/OpenSourceFoundries/californium/commits/osf-2.0.x
-
 RUN apk add --no-cache wget openjdk8-jre-base ca-certificates
 
 RUN mkdir -p /opt/cf-proxy

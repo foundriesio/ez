@@ -26,7 +26,7 @@ volumes:
 
 services:
   volume:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-edgex-volume
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-edgex-volume
     container_name: edgex-files
     networks:
       - edgex-network
@@ -37,7 +37,7 @@ services:
       - consul-data:/consul/data
 
   config-seed:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-core-config-seed
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-core-config-seed
     ports:
       - "8300:8300"
       - "8400:8400"
@@ -58,7 +58,7 @@ services:
       - volume
 
   mongo:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-edgex-mongo
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-edgex-mongo
     ports:
       - "27017:27017"
     container_name: edgex-mongo
@@ -74,7 +74,7 @@ services:
       - volume
 
   logging:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-support-logging
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-support-logging
     ports:
       - "48061:48061"
     container_name: edgex-support-logging
@@ -92,7 +92,7 @@ services:
       - volume
 
   notifications:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-support-notifications
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-support-notifications
     ports:
       - "48060:48060"
     container_name: edgex-support-notifications
@@ -108,7 +108,7 @@ services:
       - logging
 
   metadata:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-core-metadata
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-core-metadata
     ports:
       - "48081:48081"
     container_name: edgex-core-metadata
@@ -124,7 +124,7 @@ services:
       - logging
 
   data:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-core-data
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-core-data
     ports:
       - "48080:48080"
       - "5563:5563"
@@ -141,7 +141,7 @@ services:
       - logging
 
   command:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-core-command
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-core-command
     ports:
       - "48082:48082"
     container_name: edgex-core-command
@@ -158,7 +158,7 @@ services:
 
 # scheduler container does not come up on Consul - bug fix in the works.
   scheduler:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-support-scheduler
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-support-scheduler
     ports:
       - "48085:48085"
     container_name: edgex-support-scheduler
@@ -174,7 +174,7 @@ services:
       - metadata
 
   export-client:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-export-client
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-export-client
     ports:
       - "48071:48071"
     container_name: edgex-export-client
@@ -194,7 +194,7 @@ services:
       - EXPORT_CLIENT_CONSUL_HOST=edgex-config-seed
 
   export-distro:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-export-distro
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-export-distro
     ports:
       - "48070:48070"
     container_name: edgex-export-distro
@@ -216,7 +216,7 @@ services:
       - EXPORT_DISTRO_MQTTS_KEY_FILE=none
 
   rulesengine:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-support-rulesengine
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-support-rulesengine
     ports:
       - "48075:48075"
     container_name: edgex-support-rulesengine
@@ -236,7 +236,7 @@ services:
 #################################################################
 
   device-virtual:
-    image: ${ACCOUNT:-opensourcefoundries}/edgex-docker-device-virtual
+    image: ${ACCOUNT:-foundriesio}/edgex-docker-device-virtual
     ports:
       - "49990:49990"
     container_name: edgex-device-virtual
